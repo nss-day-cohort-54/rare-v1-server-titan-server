@@ -8,3 +8,5 @@ class Post():
         self.imageURL = image_url
         self.content = content
         self.approved = approved
+        self.user = None
+        self.category = None
