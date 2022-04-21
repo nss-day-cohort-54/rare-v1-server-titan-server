@@ -3,6 +3,7 @@ import json
 from models import Tag
 
 def get_all_tags():
+    """get all tags"""
     with sqlite3.connect("./db.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
@@ -24,3 +25,22 @@ def get_all_tags():
 
     return json.dumps(tags)
 
+def get_single_tag(id):
+    """get single tag"""
+    with sqlite3.connect("./db.sqlite3") as conn:
+
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT
+            t.id,
+            t.label
+        FROM Tags t
+        WHERE t.id = ?
+        """, (id,))
+
+        data = db_cursor.fetchone()
+        tag = Tag(data['id'], data['label'])
+
+        return json.dumps(tag.__dict__)
