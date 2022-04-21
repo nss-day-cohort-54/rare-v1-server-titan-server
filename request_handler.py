@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import get_all_posts, get_single_post, create_post
+from views import get_all_posts, get_single_post, create_post, get_user_posts
 from views.user import create_user, login_user
 from views import get_all_tags, get_single_tag
 
@@ -77,6 +77,11 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
+            
+            if key == "user" and resource == "posts":
+                response = get_user_posts(value)
+                    
+        
 
         self.wfile.write(response.encode())
 
