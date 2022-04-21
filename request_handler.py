@@ -1,13 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import get_all_posts, get_single_post, create_post
+from views.posts_requests import get_all_posts, get_single_post, create_post
 from views.user import create_user, login_user
-<<<<<<< HEAD
 from views.categories import get_all_categories, get_single_category
-=======
-from views import get_all_tags, get_single_tag
->>>>>>> 1b55c0a71b63952dc631f53ceadf9f5da47bcbca
-
+from views.tags_requests import get_all_tags, get_single_tag
 
 class HandleRequests(BaseHTTPRequestHandler):
     """Handles the requests to this server"""
@@ -73,21 +69,18 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_single_post(id)}"
                 else:
                     response = f"{get_all_posts()}"
-<<<<<<< HEAD
             elif resource == "categories":
                 if id is not None:
                     response = f"{get_single_category(id)}"
                 else:
                     response = f"{get_all_categories()}"
                     
-=======
-            if resource == "tags":
+            elif resource == "tags":
                 if id is not None:
                     response = f"{get_single_tag(id)}"
                 else:
                     response = f"{get_all_tags()}"
 
->>>>>>> 1b55c0a71b63952dc631f53ceadf9f5da47bcbca
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
 
