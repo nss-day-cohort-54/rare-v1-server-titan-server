@@ -165,11 +165,12 @@ def update_post(id, new_post):
                 SET
                     category_id = ?,
                     title = ?,
+                    publication_date = ?,
                     image_url = ?,
                     content = ?,
-                    approved =?
+                    approved = ?
             WHERE id = ?
-            """, (new_post['categoryId'], new_post['title'], new_post['imageURL'], new_post['content'], new_post['approved'], id, ))
+            """, (new_post['categoryId'], new_post['title'], new_post['publicationDate'], new_post['imageURL'], new_post['content'], new_post['approved'], id, ))
         
         rows_affected = db_cursor.rowcount
         
