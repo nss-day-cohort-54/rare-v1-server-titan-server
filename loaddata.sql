@@ -91,7 +91,6 @@ INSERT INTO Tags ('label') VALUES ('SQL');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date' ,'image_url', 'content', 'approved') VALUES (1, 1, 'Test Title', 0420222, 'https://i.kym-cdn.com/entries/icons/facebook/000/013/564/doge.jpg', 'this is a test of the post system', 1 );
 
-<<<<<<< HEAD
 
 INSERT INTO Categories ('label') VALUES ('Sports');
 INSERT INTO Categories ('label') VALUES ('Music');
@@ -103,6 +102,3 @@ SELECT
             ca.label
         FROM Categories AS ca
         ORDER BY ca.label ASC;
-=======
-INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date' ,'image_url', 'content', 'approved') VALUES (1, 1, 'Test Title', 0420222, 'https://i.kym-cdn.com/entries/icons/facebook/000/013/564/doge.jpg', 'this is a test of the post system', 1 );
->>>>>>> 1b55c0a71b63952dc631f53ceadf9f5da47bcbca
