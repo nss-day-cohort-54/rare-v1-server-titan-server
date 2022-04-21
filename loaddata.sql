@@ -92,3 +92,11 @@ INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date' ,'image
 
 INSERT INTO Categories ('label') VALUES ('Sports');
 INSERT INTO Categories ('label') VALUES ('Music');
+INSERT INTO Categories ('label') VALUES ('Alchemy');
+INSERT INTO Categories ('label') VALUES ('Whiskey');
+INSERT INTO Categories ('label') VALUES ('Legos');
+SELECT
+            ca.id,
+            ca.label
+        FROM Categories AS ca
+        ORDER BY ca.label ASC;
