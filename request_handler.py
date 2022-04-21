@@ -1,8 +1,12 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import get_all_posts, get_single_post
+from views import get_all_posts, get_single_post, create_post
 from views.user import create_user, login_user
+<<<<<<< HEAD
 from views.categories import get_all_categories, get_single_category
+=======
+from views import get_all_tags, get_single_tag
+>>>>>>> 1b55c0a71b63952dc631f53ceadf9f5da47bcbca
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -69,16 +73,24 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_single_post(id)}"
                 else:
                     response = f"{get_all_posts()}"
+<<<<<<< HEAD
             elif resource == "categories":
                 if id is not None:
                     response = f"{get_single_category(id)}"
                 else:
                     response = f"{get_all_categories()}"
                     
+=======
+            if resource == "tags":
+                if id is not None:
+                    response = f"{get_single_tag(id)}"
+                else:
+                    response = f"{get_all_tags()}"
+
+>>>>>>> 1b55c0a71b63952dc631f53ceadf9f5da47bcbca
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
-                    
-        
+
         self.wfile.write(response.encode())
 
 
@@ -94,8 +106,10 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = login_user(post_body)
         if resource == 'register':
             response = create_user(post_body)
+        if resource == "posts":
+            response = create_post(post_body)
 
-        self.wfile.write(response.encode())
+        self.wfile.write(f"{response}".encode())
 
     def do_PUT(self):
         """Handles PUT requests to the server"""
