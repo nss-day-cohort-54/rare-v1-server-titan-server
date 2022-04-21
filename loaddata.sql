@@ -90,9 +90,21 @@ INSERT INTO Tags ('label') VALUES ('Python');
 INSERT INTO Tags ('label') VALUES ('SQL');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date' ,'image_url', 'content', 'approved') VALUES (1, 1, 'Test Title', 0420222, 'https://i.kym-cdn.com/entries/icons/facebook/000/013/564/doge.jpg', 'this is a test of the post system', 1 );
+INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date' ,'image_url', 'content', 'approved') VALUES (1, 1, 'Test Title 2', 0420222, 'https://i.kym-cdn.com/entries/icons/facebook/000/013/564/doge.jpg', 'this is a test of the post system', 1 );
 
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date' ,'image_url', 'content', 'approved') VALUES (1, 1, 'Test Title', 0420222, 'https://i.kym-cdn.com/entries/icons/facebook/000/013/564/doge.jpg', 'this is a test of the post system', 1 );
 
 DELETE FROM Tags
 WHERE id > 3;
 
+
+INSERT INTO Categories ('label') VALUES ('Sports');
+INSERT INTO Categories ('label') VALUES ('Music');
+INSERT INTO Categories ('label') VALUES ('Alchemy');
+INSERT INTO Categories ('label') VALUES ('Whiskey');
+INSERT INTO Categories ('label') VALUES ('Legos');
+SELECT
+            ca.id,
+            ca.label
+        FROM Categories AS ca
+        ORDER BY ca.label ASC;

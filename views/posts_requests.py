@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from models import Post, Category, User
+from models import Post, Categories, User
 
 
 def get_all_posts():
@@ -28,7 +28,7 @@ def get_all_posts():
             post = Post(row['id'], row['user_id'], row['category_id'], row['title'],
                         row['publication_date'], row['image_url'], row['content'], row['approved'])
 
-            category = Category(
+            category = Categories(
                 row['id'], row['label']
             )
 
@@ -68,7 +68,7 @@ def get_user_posts(user_id):
             post = Post(row['id'], row['user_id'], row['category_id'], row['title'],
                         row['publication_date'], row['image_url'], row['content'], row['approved'])
 
-            category = Category(
+            category = Categories(
                 row['id'], row['label']
             )
 
@@ -107,7 +107,7 @@ def get_single_post(id):
         post = Post(data['id'], data['user_id'], data['category_id'], data['title'],
                     data['publication_date'], data['image_url'], data['content'], data['approved'])
 
-        category = Category(
+        category = Categories(
             data['id'], data['label']
         )
 
@@ -144,3 +144,13 @@ def create_post(new_post):
         new_post['id'] = id
 
     return json.dumps(new_post)
+
+def delete_post(id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+        DELETE FROM posts
+        WHERE id = ?
+        """, (id,))
+        
+    
