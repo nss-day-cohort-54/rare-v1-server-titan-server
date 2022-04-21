@@ -1,3 +1,4 @@
+from pickle import FALSE
 import sqlite3
 import json
 from models import Post, Categories, User
@@ -153,4 +154,26 @@ def delete_post(id):
         WHERE id = ?
         """, (id,))
         
-    
+
+
+def update_post(id, new_post):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+        
+        db_cursor.execute("""
+            UPDATE Posts
+                SET
+                    category_id = ?,
+                    title = ?,
+                    image_url = ?,
+                    content = ?,
+                    approved =?
+            WHERE id = ?
+            """, (new_post['categoryId'], new_post['title'], new_post['imageURL'], new_post['content'], new_post['approved'], id, ))
+        
+        rows_affected = db_cursor.rowcount
+        
+        if rows_affected == 0:
+            return False
+        else:
+            return True

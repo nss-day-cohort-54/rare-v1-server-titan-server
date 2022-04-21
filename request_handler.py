@@ -1,7 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import get_all_posts, get_single_post, create_post, get_user_posts
-from views.posts_requests import delete_post
+from views import get_all_posts, get_single_post, create_post, get_user_posts, update_post, delete_post
 from views.user import create_user, login_user
 from views.categories import get_all_categories, get_single_category
 from views.tags_requests import get_all_tags, get_single_tag
@@ -112,7 +111,25 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         """Handles PUT requests to the server"""
-        pass
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = self.rfile.read(content_len)
+        post_body = json.loads(post_body)
+
+        # Parse the URL
+        (resource, id) = self.parse_url()
+
+        success = False
+        
+        if resource == "posts":
+            success = update_post(id, post_body)
+        
+        if success:
+            self._set_headers(204)
+        else:
+            self._set_headers(404)
+            
+        self.wfile.write("".encode())
+            
 
     def do_DELETE(self):
         self._set_headers(204)
