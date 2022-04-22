@@ -4,9 +4,8 @@ from views import get_all_posts, get_single_post, create_post, get_user_posts
 from views.posts_requests import delete_post
 from views.user import create_user, login_user
 from views import get_all_tags, get_single_tag, create_tag
-
-from views.categories import get_all_categories, get_single_category
-
+from views.categories import add_category, get_all_categories, get_single_category
+from views.categories import delete_category, add_category
 
 class HandleRequests(BaseHTTPRequestHandler):
     """Handles the requests to this server"""
@@ -111,6 +110,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_post(post_body)
         if resource == "tags":
             response = create_tag(post_body)
+        if resource == "categories":
+            response = add_category(post_body)
 
         self.wfile.write(f"{response}".encode())
 
@@ -125,6 +126,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         
         if resource == "posts":
             delete_post(id)
+        elif resource == "categories":
+            delete_category(id)
         
         self.wfile.write("".encode())
 

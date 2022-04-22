@@ -1,3 +1,4 @@
+from cProfile import label
 import sqlite3
 import json
 from models import Categories, categories
@@ -47,3 +48,43 @@ def get_single_category(id):
         categories = Categories(data['id'], data['label'])
 
         return json.dumps(categories.__dict__)
+
+def delete_category(id):
+    """FN to delete a row in the DB based on id"""
+    with sqlite3.connect("./db.sqlite3") as conn:
+
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE
+            FROM Categories AS ca
+            WHERE ca.id = ?
+            """, (id,))
+
+        data = db_cursor.fetchone()
+
+        categories = Categories(data['id'], data['label'])
+
+        return json.dumps(categories.__dict__)
+    
+def add_category(label):
+    """FN to add a new category to the DB"""
+    with sqlite3.connect("./db.sqlite3") as conn:
+
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        INSERT
+            ca.label
+            INTO Categories AS ca
+            VALUES ca.label = ?
+            """, (label,))
+
+        data = db_cursor.fetchone()
+
+        categories = Categories(data['id'], data['label'])
+
+        return json.dumps(categories.__dict__)
+    
