@@ -68,7 +68,7 @@ def delete_category(id):
 
         return json.dumps(categories.__dict__)
     
-def add_category(label):
+def add_category(new_category):
     """FN to add a new category to the DB"""
     with sqlite3.connect("./db.sqlite3") as conn:
 
@@ -77,14 +77,11 @@ def add_category(label):
 
         db_cursor.execute("""
         INSERT
-            ca.label
-            INTO Categories AS ca
-            VALUES ca.label = ?
-            """, (label,))
+            INTO Categories ( label )
+            VALUES ( ? )
+            """, (new_category['label'], ))
 
-        data = db_cursor.fetchone()
+        id = db_cursor.lastrowid
+        new_category['id'] = id
 
-        categories = Categories(data['id'], data['label'])
-
-        return json.dumps(categories.__dict__)
-    
+        return json.dumps(new_category)
