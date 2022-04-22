@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import get_all_posts, get_single_post, create_post, get_user_posts, update_post, delete_post
+from views import get_all_posts, get_single_post, create_post, get_user_posts, update_post, delete_post, filter_by_category
 from views.user import create_user, login_user
 from views import get_all_tags, get_single_tag, create_tag
 from views import get_all_users
@@ -95,6 +95,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             
             if key == "user" and resource == "posts":
                 response = get_user_posts(value)
+                
+            if key =="category" and resource == "posts":
+                response = filter_by_category(value)
 
 
         self.wfile.write(response.encode())
