@@ -27,3 +27,22 @@ def get_all_users():
             users.append(user.__dict__)
 
     return json.dumps(users)
+
+def get_single_user(id):
+    """get single user"""
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT
+            *
+        FROM Users
+        WHERE id = ?
+        """, (id, ))
+
+        data = db_cursor.fetchone()
+        user = User(data['id'], data['first_name'], data['last_name'], data['email'], data['bio'], data['username'], data['password'], data['profile_image_url'], data['created_on'], data['active'])
+
+    return json.dumps(user.__dict__)
+
