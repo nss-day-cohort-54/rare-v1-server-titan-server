@@ -30,12 +30,52 @@ def get_all_posts():
                         row['publication_date'], row['image_url'], row['content'], row['approved'])
 
             category = Categories(
-                row['id'], row['label']
+                row['category_id'], row['label']
             )
 
             post.category = category.__dict__
 
-            user = User(row['id'], row['first_name'], row['last_name'], row['email'], row['bio'],
+            user = User(row['user_id'], row['first_name'], row['last_name'], row['email'], row['bio'],
+                        row['username'], row['password'], row['profile_image_url'], row['created_on'], row['active'])
+
+            post.user = user.__dict__
+
+            posts.append(post.__dict__)
+
+    return json.dumps(posts)
+
+def filter_by_category(categoryId):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT
+            *
+            
+        from Posts p
+        Join Categories c
+            ON c.id = p.category_id
+        Join Users u
+            on u.id = p.user_id
+        WHERE c.id = ?
+        """, (categoryId, ))
+
+        posts = []
+
+        dataset = db_cursor.fetchall()
+
+        for row in dataset:
+            post = Post(row['id'], row['user_id'], row['category_id'], row['title'],
+                        row['publication_date'], row['image_url'], row['content'], row['approved'])
+
+            category = Categories(
+                row['category_id'], row['label']
+            )
+
+            post.category = category.__dict__
+
+            user = User(row['user_id'], row['first_name'], row['last_name'], row['email'], row['bio'],
                         row['username'], row['password'], row['profile_image_url'], row['created_on'], row['active'])
 
             post.user = user.__dict__
@@ -70,12 +110,12 @@ def get_user_posts(user_id):
                         row['publication_date'], row['image_url'], row['content'], row['approved'])
 
             category = Categories(
-                row['id'], row['label']
+                row['category_id'], row['label']
             )
 
             post.category = category.__dict__
 
-            user = User(row['id'], row['first_name'], row['last_name'], row['email'], row['bio'],
+            user = User(row['user_id'], row['first_name'], row['last_name'], row['email'], row['bio'],
                         row['username'], row['password'], row['profile_image_url'], row['created_on'], row['active'])
 
             post.user = user.__dict__
@@ -109,12 +149,12 @@ def get_single_post(id):
                     data['publication_date'], data['image_url'], data['content'], data['approved'])
 
         category = Categories(
-            data['id'], data['label']
+            data['category_id'], data['label']
         )
 
         post.category = category.__dict__
 
-        user = User(data['id'], data['first_name'], data['last_name'], data['email'], data['bio'],
+        user = User(data['user_id'], data['first_name'], data['last_name'], data['email'], data['bio'],
                     data['username'], data['password'], data['profile_image_url'], data['created_on'], data['active'])
 
         post.user = user.__dict__
