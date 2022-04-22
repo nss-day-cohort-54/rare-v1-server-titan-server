@@ -5,7 +5,8 @@ from views.posts_requests import delete_post
 from views.user import create_user, login_user
 from views import get_all_tags, get_single_tag, create_tag
 from views.categories import add_category, get_all_categories, get_single_category
-from views.categories import delete_category, add_category
+from views.categories import delete_category
+from views import get_all_users
 
 class HandleRequests(BaseHTTPRequestHandler):
     """Handles the requests to this server"""
@@ -76,20 +77,25 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_single_category(id)}"
                 else:
                     response = f"{get_all_categories()}"
-                    
+
             elif resource == "tags":
                 if id is not None:
                     response = f"{get_single_tag(id)}"
                 else:
                     response = f"{get_all_tags()}"
 
+            elif resource == "users":
+                # if id is not None:
+                #     response = f"{get_single_tag(id)}"
+                # else:
+                response = f"{get_all_users()}"
+
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
             
             if key == "user" and resource == "posts":
                 response = get_user_posts(value)
-                    
-        
+
 
         self.wfile.write(response.encode())
 

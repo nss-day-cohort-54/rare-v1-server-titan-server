@@ -85,6 +85,7 @@ CREATE TABLE "Categories" (
 );
 
 INSERT INTO Categories ('label') VALUES ('News');
+INSERT INTO Categories ('label') VALUES ('Sport');
 INSERT INTO Tags ('label') VALUES ('JavaScript');
 INSERT INTO Tags ('label') VALUES ('Python');
 INSERT INTO Tags ('label') VALUES ('SQL');
