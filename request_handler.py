@@ -1,12 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import get_all_posts, get_single_post, create_post, get_user_posts, update_post, delete_post, filter_by_category, search_posts_by_title
+from views import get_all_posts, get_single_post, create_post, get_user_posts, update_post, delete_post, filter_by_category, search_posts_by_title, get_all_users, get_single_user, delete_category, add_category, get_all_categories, get_single_category, get_all_tags, get_single_tag, create_tag, create_comment, get_comments_per_post, delete_comment, create_subscription
 from views.user import create_user, login_user
-from views import get_all_tags, get_single_tag, create_tag
-from views.categories import add_category, get_all_categories, get_single_category
-from views.categories import delete_category
-from views import get_all_users, get_single_user
-from views import create_subscription
+
+
 
 class HandleRequests(BaseHTTPRequestHandler):
     """Handles the requests to this server"""
@@ -101,6 +98,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             
             if key == "title" and resource == "posts":
                 response = search_posts_by_title(value)
+                
+            if key == "post" and resource == "comments":
+                response = get_comments_per_post(value)
 
 
         self.wfile.write(response.encode())
@@ -124,6 +124,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_tag(post_body)
         if resource == "categories":
             response = add_category(post_body)
+        if resource == "comments":
+            response = create_comment(post_body)
         if resource == "subcriptions":
             response = create_subscription(post_body)
 
@@ -160,6 +162,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             delete_post(id)
         elif resource == "categories":
             delete_category(id)
+        elif resource == "comments":
+            delete_comment(id)
         
         self.wfile.write("".encode())
 

@@ -93,7 +93,7 @@ INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.c
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date' ,'image_url', 'content', 'approved') VALUES (1, 1, 'Test Title', 0420222, 'https://i.kym-cdn.com/entries/icons/facebook/000/013/564/doge.jpg', 'this is a test of the post system', 1 );
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date' ,'image_url', 'content', 'approved') VALUES (1, 1, 'Test Title 2', 0420222, 'https://i.kym-cdn.com/entries/icons/facebook/000/013/564/doge.jpg', 'this is a test of the post system', 1 );
 
-INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date' ,'image_url', 'content', 'approved') VALUES (1, 1, 'Test Title', 0420222, 'https://i.kym-cdn.com/entries/icons/facebook/000/013/564/doge.jpg', 'this is a test of the post system', 1 );
+INSERT INTO Posts ('id', 'user_id', 'category_id', 'title', 'publication_date' ,'image_url', 'content', 'approved') VALUES (1, 1, 1, 'Test Title', 0420222, 'https://i.kym-cdn.com/entries/icons/facebook/000/013/564/doge.jpg', 'this is a test of the post system', 1 );
 
 DELETE FROM Tags
 WHERE id > 3;
@@ -109,3 +109,11 @@ SELECT
             ca.label
         FROM Categories AS ca
         ORDER BY ca.label ASC;
+
+
+SELECT *
+        from Comments c
+        Join Users u
+            on u.id = c.author_id
+        Join Posts p
+          on p.id = c.post_id
