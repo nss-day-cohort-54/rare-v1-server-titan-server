@@ -27,7 +27,8 @@ CREATE TABLE "Subscriptions" (
   "author_id" INTEGER,
   "created_on" date,
   FOREIGN KEY(`follower_id`) REFERENCES `Users`(`id`),
-  FOREIGN KEY(`author_id`) REFERENCES `Users`(`id`)
+  FOREIGN KEY(`author_id`) REFERENCES `Users`(`id`),
+  UNIQUE (follower_id, author_id)
 );
 
 CREATE TABLE "Posts" (
@@ -116,4 +117,9 @@ SELECT *
         Join Users u
             on u.id = c.author_id
         Join Posts p
-          on p.id = c.post_id
+          on p.id = c.post_id;
+
+DELETE FROM Subscriptions
+WHERE id IN (1, 4);
+
+drop table Subscriptions;
