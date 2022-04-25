@@ -10,3 +10,4 @@ class Post():
         self.approved = approved
         self.user = None
         self.category = None
+        self.tags = None

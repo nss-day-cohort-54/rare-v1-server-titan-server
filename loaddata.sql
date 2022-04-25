@@ -117,3 +117,35 @@ SELECT *
             on u.id = c.author_id
         Join Posts p
           on p.id = c.post_id
+
+
+INSERT INTO PostTags ('post_id', 'tag_id' ) VALUES (1,1);
+INSERT INTO PostTags ('post_id', 'tag_id' ) VALUES (1,2);
+
+SELECT
+            p.id,
+            p.user_id,
+            p.category_id,
+            p.title,
+            p.publication_date,
+            p.image_url,
+            p.content,
+            p.approved,
+            c.label content_label,
+            u.first_name,
+            u.last_name,
+            u.username,
+            t.id,
+            t.label tag_label
+
+            
+        from Posts p
+        Join Categories c
+            ON c.id = p.category_id
+        Join Users u
+            on u.id = p.user_id
+        Join PostTags pt
+            on pt.post_id = p.id
+        Join Tags t
+            on t.id = pt.tag_id
+        Where t.id = 1
