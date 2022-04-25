@@ -111,7 +111,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             
 
 
-        self.wfile.write(response.encode())
+        self.wfile.write(f"{response}".encode())
 
 
     def do_POST(self):
@@ -173,7 +173,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         elif resource == "comments":
             delete_comment(id)
         elif resource == "subscriptions":
-            delete_comment(id)
+            delete_subscription(id)
+
         
         self.wfile.write("".encode())
 

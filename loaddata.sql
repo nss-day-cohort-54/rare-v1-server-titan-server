@@ -120,6 +120,6 @@ SELECT *
           on p.id = c.post_id;
 
 DELETE FROM Subscriptions
-WHERE id IN (1, 4);
+WHERE id >1;
 
 drop table Subscriptions;

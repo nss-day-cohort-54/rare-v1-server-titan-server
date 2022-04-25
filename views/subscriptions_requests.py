@@ -44,6 +44,6 @@ def delete_subscription(id):
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
         db_cursor.execute("""
-        DELETE FROM subscriptions
+        DELETE FROM Subscriptions
         WHERE id = ?
         """, (id, ))
