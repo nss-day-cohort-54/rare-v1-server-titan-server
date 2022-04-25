@@ -121,6 +121,7 @@ SELECT *
 
 INSERT INTO PostTags ('post_id', 'tag_id' ) VALUES (1,1);
 INSERT INTO PostTags ('post_id', 'tag_id' ) VALUES (1,2);
+INSERT INTO PostTags ('post_id', 'tag_id' ) VALUES (3,1);
 
 SELECT
             p.id,

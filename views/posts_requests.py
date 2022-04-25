@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from models import Post, Categories, User, Tag
+from models import Categories, User, Tag, Post
 
 
 def get_all_posts():
@@ -171,20 +171,7 @@ def get_posts_by_tag(tag_id):
 
         db_cursor.execute("""
         SELECT
-            p.id,
-            p.user_id,
-            p.category_id,
-            p.title,
-            p.publication_date,
-            p.image_url,
-            p.content,
-            p.approved,
-            c.label content_label,
-            u.first_name,
-            u.last_name,
-            u.username,
-            t.id,
-            t.label tag_label
+            *
             
         from Posts p
         Join Categories c
@@ -207,18 +194,19 @@ def get_posts_by_tag(tag_id):
                         row['publication_date'], row['image_url'], row['content'], row['approved'])
 
             category = Categories(
-                row['label']
+                row['category_id'], row['label']
             )
 
             post.category = category.__dict__
 
-            user = User(row['first_name'], row['last_name'], row['username'])
+            user = User(row['user_id'], row['first_name'], row['last_name'], row['email'], row['bio'],
+                        row['username'], row['password'], row['profile_image_url'], row['created_on'], row['active'])
 
             post.user = user.__dict__
             
-            tag = Tag(row['t.id'], row['t.label'])
+            tag = Tag(row['id'], row['label'])
             
-            posts.tags = tag.__dict__
+            post.tags = tag.__dict__
 
             posts.append(post.__dict__)
 
