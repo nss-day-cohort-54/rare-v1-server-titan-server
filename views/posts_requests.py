@@ -1,4 +1,3 @@
-from pickle import FALSE
 import sqlite3
 import json
 from models import Post, Categories, User
