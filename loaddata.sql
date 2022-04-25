@@ -27,8 +27,7 @@ CREATE TABLE "Subscriptions" (
   "author_id" INTEGER,
   "created_on" date,
   FOREIGN KEY(`follower_id`) REFERENCES `Users`(`id`),
-  FOREIGN KEY(`author_id`) REFERENCES `Users`(`id`),
-  UNIQUE (follower_id, author_id)
+  FOREIGN KEY(`author_id`) REFERENCES `Users`(`id`)
 );
 
 CREATE TABLE "Posts" (
@@ -123,3 +122,7 @@ DELETE FROM Subscriptions
 WHERE id >1;
 
 drop table Subscriptions;
+
+update posts
+set category_id = 2
+where id in (1,5);
