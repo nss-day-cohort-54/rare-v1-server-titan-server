@@ -3,6 +3,7 @@ import json
 from views import get_all_posts, get_single_post, create_post, get_user_posts, update_post, delete_post, filter_by_category, search_posts_by_title, get_all_users, get_single_user, delete_category, add_category, get_all_categories, get_single_category, get_all_tags, get_single_tag, create_tag, create_comment, get_comments_per_post, delete_comment, create_subscription, get_posts_by_tag
 from views.user import create_user, login_user
 from views import get_all_subscriptions, create_subscription, delete_subscription
+from views import get_posts_by_subscriptions
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -63,6 +64,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         # `/animals` or `/animals/2`
         if len(parsed) == 2:
             ( resource, id ) = parsed
+            
+            if resource == "" and id is None:
+                response = f"{get_posts_by_subscriptions()}"
 
             if resource == "posts":
                 if id is not None:
@@ -94,19 +98,19 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
-            
+
             if key == "user" and resource == "posts":
                 response = get_user_posts(value)
-                
+
             if key == "category" and resource == "posts":
                 response = filter_by_category(value)
-            
+
             if key == "title" and resource == "posts":
                 response = search_posts_by_title(value)
-                
+
             if key == "post" and resource == "comments":
                 response = get_comments_per_post(value)
-            
+
             if key == "tags" and resource == "posts":
                 response = get_posts_by_tag(value)
 
@@ -157,15 +161,15 @@ class HandleRequests(BaseHTTPRequestHandler):
             self._set_headers(204)
         else:
             self._set_headers(404)
-            
+
         self.wfile.write("".encode())
-            
+
 
     def do_DELETE(self):
         self._set_headers(204)
-        
+
         (resource, id) = self.parse_url()
-        
+
         if resource == "posts":
             delete_post(id)
         elif resource == "categories":
@@ -173,12 +177,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         elif resource == "comments":
             delete_comment(id)
         elif resource == "subscriptions":
-            try:
-                delete_subscription(id)
-            except IntegrityError:
-                print("hi")
+            delete_subscription(id)
 
-        
         self.wfile.write("".encode())
 
 
