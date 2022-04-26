@@ -30,6 +30,14 @@ CREATE TABLE "Subscriptions" (
   FOREIGN KEY(`author_id`) REFERENCES `Users`(`id`)
 );
 
+Insert into Subscriptions (follower_id, author_id, created_on)
+Values (1, 1, "");
+Insert into Subscriptions (follower_id, author_id, created_on)
+Values (1, 2, "");
+Insert into Subscriptions (follower_id, author_id, created_on)
+Values (2, 2, "");
+
+
 CREATE TABLE "Posts" (
   "id" INTEGER PRIMARY KEY AUTOINCREMENT,
   "user_id" INTEGER,
@@ -119,7 +127,7 @@ SELECT *
           on p.id = c.post_id;
 
 DELETE FROM Subscriptions
-WHERE id >0;
+WHERE id =20;
 
 drop table Subscriptions;
 
@@ -160,3 +168,8 @@ SELECT
         Join Tags t
             on t.id = pt.tag_id
         Where t.id = 1
+
+SELECT *
+FROM Posts p
+JOIN Users u ON u.id = p.user_id
+JOIN Subscriptions s ON s.follower_id = p.user_id

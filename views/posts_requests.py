@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from models import Categories, User, Tag, Post
+from models import Categories, User, Tag, Post, Subscription
 
 
 def get_all_posts():
@@ -306,3 +306,33 @@ def update_post(id, new_post):
             return False
         else:
             return True
+
+def get_posts_by_subscriptions():
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT *
+        FROM Posts p
+        JOIN Users u ON u.id = p.user_id
+        JOIN Subscriptions s ON s.follower_id = p.user_id 
+        """)
+
+        posts = []
+
+        dataset = db_cursor.fetchall()
+
+        for row in dataset:
+            post = Post(row['id'], row['user_id'], row['category_id'], row['title'],
+                        row['publication_date'], row['image_url'], row['content'], row['approved'])
+            user = User(row['id'], row['first_name'], row['last_name'], row['email'], row['bio'],
+                        row['username'], row['password'], row['profile_image_url'], row['created_on'], row['active'])
+            post.user = user.__dict__
+            
+            subscription = Subscription(row['id'], row['follower_id'], row['author_id'], row['created_on'])
+            post.subscription = subscription.__dict__
+
+            posts.append(post.__dict__)
+
+    return json.dumps(posts)
