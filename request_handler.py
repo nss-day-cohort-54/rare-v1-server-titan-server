@@ -1,11 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from sqlite3 import IntegrityError
-from views import get_all_posts, get_single_post, create_post, get_user_posts, update_post, delete_post, filter_by_category, search_posts_by_title, get_all_users, get_single_user, delete_category, add_category, get_all_categories, get_single_category, get_all_tags, get_single_tag, create_tag, create_comment, get_comments_per_post, delete_comment, create_subscription
-from views.subscriptions_requests import delete_subscription
+from views import get_all_posts, get_single_post, create_post, get_user_posts, update_post, delete_post, filter_by_category, search_posts_by_title, get_all_users, get_single_user, delete_category, add_category, get_all_categories, get_single_category, get_all_tags, get_single_tag, create_tag, create_comment, get_comments_per_post, delete_comment, create_subscription, get_posts_by_tag
 from views.user import create_user, login_user
 from views import get_all_subscriptions, create_subscription, delete_subscription
-
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -110,6 +107,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             if key == "post" and resource == "comments":
                 response = get_comments_per_post(value)
             
+            if key == "tags" and resource == "posts":
+                response = get_posts_by_tag(value)
 
 
         self.wfile.write(f"{response}".encode())
