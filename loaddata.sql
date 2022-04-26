@@ -119,7 +119,7 @@ SELECT *
           on p.id = c.post_id;
 
 DELETE FROM Subscriptions
-WHERE id >1;
+WHERE id >0;
 
 drop table Subscriptions;
 
