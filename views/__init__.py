@@ -3,5 +3,4 @@ from .posts_requests import get_all_posts, get_single_post, create_post, get_use
 from .tags_requests import get_all_tags, get_single_tag, create_tag
 from .users_requests import get_all_users, get_single_user
 from .comments_requests import get_comments_per_post, delete_comment, create_comment
-from .subscriptions_requests import create_subscription
-
+from .subscriptions_requests import create_subscription, delete_subscription, get_all_subscriptions

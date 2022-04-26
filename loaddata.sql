@@ -116,6 +116,16 @@ SELECT *
         Join Users u
             on u.id = c.author_id
         Join Posts p
+          on p.id = c.post_id;
+
+DELETE FROM Subscriptions
+WHERE id >0;
+
+drop table Subscriptions;
+
+update posts
+set category_id = 2
+where id in (1,5);
           on p.id = c.post_id
 
 
